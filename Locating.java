@@ -2034,7 +2034,6 @@ public class Locating {
 					int row = Integer.valueOf(str_list[2]);
 					System.out.println(column + " " + row + " " + level + column0 + " " + row0 + " " + resolu);
 					findBestTile(column0, row0, resolu, dis, column, row, level, multicode, direction);
-					// findTrialBestTile(longitude0, latitude0, dis, column, row, level, multicode, direction);
 				}
 				for (int i = 27; i >= 0; i--) {
 					if (multicode.get(i).size() > 0) {
