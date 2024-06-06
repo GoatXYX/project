@@ -2226,116 +2226,19 @@ public class Locating {
 	public static void main(String[] args) throws IOException, SQLException {
 
 		init();
-		// getTrialInstanceTriple();
+		System.out.println("1");
+		ArrayList<String> referencelist =
+		FileOperator.readURI("matchedaddress_D1.txt");
+		System.out.println("2");
+		for (int i = 0; i < referencelist.size(); i++) {
+		System.out.println(referencelist.get(i));
+		AddressMatch(referencelist.get(i), conn, abb_map, dict);
+		}
+		System.out.println("3");
 		ArrayList<String> list = FileOperator.readURI("descriptions_D1.txt");
-		// for (String str : list) {
-		// 	int num = ReasonTrialDistanceDirection(str, conn);
-		// 	}
-		// String str = list.get(0);
-		// System.out.println(str);
-		// ReasonTrialDistanceDirection(str, conn);
-		// Code trialc = new Code(72,88,7);
-		// System.out.println(containPOI(trialc)? "true":"false");
-		ArrayList<String> slist1 = new ArrayList<String>();
-		ArrayList<String> slist2 = new ArrayList<String>();
-		double dis = 10000;
-		String direction = "NE";
-		ArrayList<ArrayList<Code>> multicode = new ArrayList<ArrayList<Code>>(); // initialize 2 dimensional list to
-																					// store
-																					// different level of tile code
-		for (int i = 0; i < 28; i++) {
-			ArrayList<Code> clist = new ArrayList<Code>();
-			multicode.add(clist);
+		System.out.println("4");
+		for (String str : list) {
+		int num = ReasonDistanceDirection(str, conn);
 		}
-		double resolu = 3.14 * 6371000 / Math.pow(2, 27); // perimeter of earth
-		// -76.8200624999999 42.0566918
-		double longitude1 = -76.8200624999999;
-		double latitude1 = 42.0566918;
-		// -76.8151350999999 42.1550958
-		double longitude2 = -76.8151350999999;
-		double latitude2 = 42.1550958;
-		String s1 = null, s2 = null;
-		ArrayList<String> codelist = new ArrayList<String>();
-		// int poiaddress_column = (int) Math
-		// 			.floor(Math.pow(2, poiaddress_level) * (poiaddress_longitude + 180) / 360);
-		// 	int poiaddress_row = (int) Math.floor(Math.pow(2, poiaddress_level - 1) * (poiaddress_latitude + 90) / 180);
-		int column1 = (int) Math.floor(Math.pow(2, 27) * (longitude1 + 180) / 360);
-		int row1 = (int) Math.floor(Math.pow(2, 26) * (latitude1 + 90) / 180);
-		int column2 = (int) Math.floor(Math.pow(2, 27) * (longitude2 + 180) / 360);
-		int row2 = (int) Math.floor(Math.pow(2, 26) * (latitude2 + 90) / 180);
-		for (int i = 5; i<28; i++) {
-			String pathsString = i + "_dirc_D1.txt"; // neighbor tile code
-			ArrayList<String> dir_list = FileOperator.readURI(pathsString);
-			Code c1 = getC(longitude1, latitude1, i);
-			Code c2 = getC(longitude2, latitude2, i);
-			s1 = c1.level + "_" + c1.x + "_" + c1.y;
-			s2 = c2.level + "_" + c2.x + "_" + c2.y;
-			slist1.add(s1);
-			// System.out.println(s1);
-			slist2.add(s2);
-			// System.out.println(s2);
-			for (int j = 0; j < dir_list.size(); j++) {
-				String[] strlist = dir_list.get(j).split(" ");
-				String strlist1 = strlist[0];
-				String strlist2 = strlist[2];
-				String strlist3 = strlist[1];
-				// if ((strlist1.equals(s2)&& (strlist2.equals(s1))) || (strlist2.equals(s2)&& (strlist1.equals(s1)))) {
-				// 	System.out.println("s1: " + s1 + " s2: " + s2);
-				// }
-				if (strlist1.equals(s1) && strlist3.equals(direction)) {
-					codelist.add(strlist2);
-				}
-			}
-		}
-		// System.out.println("codelist: " + codelist);
-		double distance=Math.sqrt(Math.pow((column1-column2)*resolu,2)+Math.pow((row1-row2)*resolu,2));
-		System.out.println("distance: " + distance);
-		// for (String str : codelist){
-		// 	String[] str_list = str.split("_");
-		// 	int level = Integer.valueOf(str_list[0]);
-		// 	int column = Integer.valueOf(str_list[1]);
-		// 	int row = Integer.valueOf(str_list[2]);
-		// 	findBestTile(column1, row1, resolu, dis, column, row, level, multicode, direction);
-		// }
-		// findBestTile(column1, row1, resolu, dis, column2, row2, 27, multicode, direction);
-		// String code3 = codelist.get(5);
-		// String[] str_list3 = code3.split("_");
-		// int level3 = Integer.valueOf(str_list3[0]);
-		// int column3 = Integer.valueOf(str_list3[1]);
-		// String code4 = codelist.get(6);
-		// String[] str_list4 = code4.split("_");
-		// int level4 = Integer.valueOf(str_list4[0]);
-		// int column4 = Integer.valueOf(str_list4[1]);
-		// double sth3 = column3 * Math.pow(2, 27 - level3);
-		// System.out.println(sth3);
-		// double sth4 = column4 * Math.pow(2, 27 - level4);
-		// System.out.println(sth4);
-		// System.out.println(longitude1);
-		// System.out.println("multicode: " + multicode);
-
-
-		// System.out.println("1");
-		// ArrayList<String> referencelist =
-		// FileOperator.readURI("matchedaddress_D1.txt");
-		// System.out.println("2");
-		// for (int i = 0; i < referencelist.size(); i++) {
-		// System.out.println(referencelist.get(i));
-		// AddressMatch(referencelist.get(i), conn, abb_map, dict);
-		// }
-		// System.out.println("3");
-		// ArrayList<String> list = FileOperator.readURI("descriptions_D1.txt");
-		// System.out.println("4");
-		// for (String str : list) {
-		// int num = ReasonDistanceDirection(str, conn);
-		// ReasonGeneral(str, conn, num);
-		// }
-		// System.out.println("5");
-		// System.out.println("------------------");
-		// getInstanceTriple();
-		// System.out.println("------------------");
-		// getCodeTriples();
-		// System.out.println("------------------");
-		// getDirectionTriples();
-		// System.out.println("------------------");
 	}
 }
